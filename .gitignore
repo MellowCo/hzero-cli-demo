@@ -47,3 +47,5 @@ tsconfig.tsbuildinfo
 
 locale/code-scan
 locale/bak-code-scan-*
+
+.history

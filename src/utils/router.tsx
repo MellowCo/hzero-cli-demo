@@ -1,8 +1,8 @@
-import getModuleRouters from './getModuleRouters';
 import { getConvertRouter } from 'hzero-boot/lib/utils/getConvertRouter';
+import getModuleRouters from './getModuleRouters';
 import routers from '../config/routers';
 
-const convertRouter = (app) =>
+const convertRouter = app =>
   getConvertRouter({
     hzeroRoutes: routers,
     options: { app },
