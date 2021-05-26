@@ -24,7 +24,7 @@ hzero-cli new sample # 创建 HZERO 前端项目
 
 ![image-20210525195347539](https://gitee.com/MellowCo/BlobImg/raw/master/20210525195347.png)
 
-## 2 开发
+## 2 启动
 
 ### 1 启动项目
 
@@ -51,7 +51,7 @@ API_HOST: 103.1.1.6
 
 ![image-20210525211758831](https://gitee.com/MellowCo/BlobImg/raw/master/20210525211758.png)
 
-* 1 配置路由
+* 1 配置子模块路由
 
   * 在`src/utils/getModuleRouters.js` 添加模块的路由
 
@@ -102,4 +102,158 @@ yarn build:ms
 * 在`config/routers`下生成路由信息
 
 ![image-20210525204718037](https://gitee.com/MellowCo/BlobImg/raw/master/20210525204718.png)
+
+* 效果
+
+  ![image-20210526205241947](https://gitee.com/MellowCo/BlobImg/raw/master/20210526205249.png)
+
+## 3 开发
+
+> 修改生成的模板，创建员工管理页面，有查询表格+新建、编辑、详情等操作
+
+### 1 预定员工的基础信息
+
+```json
+{
+  "id": "number",
+  "name": "string",
+  "desc": "string",
+  "charger": "string",
+  "date": "Date"
+}
+```
+
+> 新建 types/Employee.ts 用于定义类型
+
+```ts
+export interface IEmployee {
+  id: string;
+  name: string;
+  desc: string;
+  charger: string;
+  date: string;
+}
+
+export interface IQueryEmployee {
+  id?: string;
+  name?: string;
+  charger?: string;
+  date?: string;
+  page?: number;
+  size?: number;
+}
+```
+
+
+
+### 2 修改dataSet，数据源
+
+> 修改 stores/tableDS.ts
+
+```js
+const getTableDSProps = (): DataSetProps => ({
+  autoQuery: true, // 在创建成功后进行查询
+  // 表格显示的字段
+  fields: [
+    {
+      name: 'id',
+      label: '员工编号',
+      type: FieldType.number,
+    },
+    {
+      name: 'name',
+      label: '员工姓名',
+      type: FieldType.string,
+    },
+    {
+      name: 'desc',
+      label: '员工描述',
+      type: FieldType.string,
+    },
+    {
+      name: 'charger',
+      type: FieldType.string,
+      label: '主管姓名',
+    },
+    {
+      name: 'date',
+      type: FieldType.date,
+      label: '入职时间',
+    },
+  ],
+  // 查询字段
+  queryFields: [
+    {
+      name: 'id',
+      label: '员工编号',
+      type: FieldType.number,
+    },
+    {
+      name: 'name',
+      label: '员工姓名',
+      type: FieldType.string,
+    },
+    {
+      name: 'charger',
+      type: FieldType.string,
+      label: '主管姓名',
+    },
+    {
+      name: 'date',
+      type: FieldType.date,
+      label: '入职时间',
+    },
+  ],
+  // 处理请求相关内容 此处用来做mock处理
+  transport: {
+    // 当使用ds.query()或者触发查询的时候可以调用的接口地址
+    read: {
+      url: '/_api/standard-table/query',
+      method: 'get',
+    },
+    // 当使用ds.delete()或者触发删除的时候可以调用的接口地址
+    destroy: {
+      url: '/_api/standard-table/delete',
+      method: 'delete',
+    },
+    // 当使用ds.submit()或者触发保存的时候可以调用的接口地址
+    submit: {
+      url: '/_api/standard-table/submit',
+      method: 'post',
+    },
+  },
+});
+```
+
+### 3 修改页面中 Table组件
+
+> 修改 components/TablePage.tsx
+
+```tsx
+<Table
+    dataSet={tableDs!}
+    buttons={[
+        [
+            TableButtonType.delete,
+            {
+                color: ButtonColor.default,
+            },
+        ],
+    ]}
+    queryFieldsLimit={3}
+    pagination={{
+        showPager: true,
+    }}
+    rowHeight={34}
+    >
+    <Column name="id" />
+    <Column name="name" />
+    <Column name="desc" />
+    <Column name="charger" />
+    <Column name="date" />
+    <Column header="操作" renderer={operatorsRenderer} width={230} />
+</Table>
+```
+
+
 

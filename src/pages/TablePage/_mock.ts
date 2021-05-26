@@ -1,39 +1,46 @@
-import Mock from "mockjs";
-import { Request, Response } from "express";
+import Mock from 'mockjs';
+import { Request, Response } from 'express';
+// import { IEmployee, IQueryEmployee } from './types/Employee';
 
-const getFakeList = (req: Request, res: Response) => {
-  const result: any[] = [];
+// const getFakeList = (req: Request, res: Response) => {
+//   const result: IEmployee[] = [];
 
-  const params = req.query as any;
-  const {
-    size = 10,
-    page,
-    status,
-    serialNumber = "",
-    title = "",
-    startTime,
-    endTime,
-  } = params;
+//   const params = req.query as IQueryEmployee;
 
-  for (let i = 0; i < size; i++) {
-    const len: number = result.length;
-    result.push({
-      serialNumber: `1000${serialNumber}${len}-${page * size}`,
-      title: `标题${title}${len}`,
-      description: "描述文字描述文字描述文字描述文字描述文字描述文字",
-      status: status !== undefined ? Number(status) : Math.round(Math.random()),
-      operator: "张三",
-      remark: "备注",
-      createTime: endTime || startTime || "2020-11-09 08:33:11",
-    });
-  }
+//   const { size = 10 } = params;
 
-  return res.json({
-    content: result,
-    success: true,
-    totalElements: size * 10,
-  });
+//   for (let i = 0; i < size; i++) {
+//     result.push({
+//       id: Mock.Random.id(),
+//       name: Mock.Random.cname(),
+//       desc: Mock.Random.csentence(),
+//       charger: Mock.Random.cname(),
+//       date: Mock.Random.date(),
+//     });
+//   }
+
+//   return res.json({
+//     content: result,
+//     success: true,
+//     totalElements: size * 10,
+//   });
+// };
+
+const fakeListTemlate = {
+  success: '@boolean',
+  totalElements: '@integer(60, 100)',
+  'content|10': [
+    {
+      id: '@id',
+      name: '@cname',
+      desc: '@csentence',
+      charger: '@cname',
+      date: '@date',
+    },
+  ],
 };
+
+const getFakeList = Mock.mock(fakeListTemlate);
 
 const deleteFakeData = (req: Request, res: Response) => {
   res.send(req.body);
@@ -44,8 +51,8 @@ const submitData = (req: Request, res: Response) => {
   res.send(
     req.body.map((v: any) => ({
       serialNumber: `${Math.floor(Math.random() * 100000)}`,
-      operator: "张三",
-      createTime: "2020-11-09 08:33:11",
+      operator: '张三',
+      createTime: '2020-11-09 08:33:11',
       ...v,
     }))
   );
@@ -60,10 +67,8 @@ const getOperationRecord = (req: Request, res: Response) => {
     result.push({
       operator: `张三${len}-${page * size}-${serialNumber}`,
       operatorType:
-        operatorType !== undefined
-          ? operatorType
-          : `${Math.random() > 0.5 ? "add" : "edit"}`,
-      operatorTime: "2020-11-09 08:33:11",
+        operatorType !== undefined ? operatorType : `${Math.random() > 0.5 ? 'add' : 'edit'}`,
+      operatorTime: '2020-11-09 08:33:11',
     });
   }
 
@@ -81,11 +86,11 @@ const statusData = {
       codeId: 10001,
       codeValueId: 10027,
       description: null,
-      meaning: "禁用",
+      meaning: '禁用',
       value: 0,
       orderSeq: 10,
       tag: null,
-      enabledFlag: "Y",
+      enabledFlag: 'Y',
       parentCodeValueId: null,
       parentCodeValue: null,
       parentCodeValueMeaning: null,
@@ -95,11 +100,11 @@ const statusData = {
       codeId: 10001,
       codeValueId: 10028,
       description: null,
-      meaning: "启用",
+      meaning: '启用',
       value: 1,
       orderSeq: 20,
       tag: null,
-      enabledFlag: "Y",
+      enabledFlag: 'Y',
       parentCodeValueId: null,
       parentCodeValue: null,
       parentCodeValueMeaning: null,
@@ -114,11 +119,11 @@ const operatorTypeData = {
       codeId: 10001,
       codeValueId: 10027,
       description: null,
-      meaning: "新建",
-      value: "add",
+      meaning: '新建',
+      value: 'add',
       orderSeq: 10,
       tag: null,
-      enabledFlag: "Y",
+      enabledFlag: 'Y',
       parentCodeValueId: null,
       parentCodeValue: null,
       parentCodeValueMeaning: null,
@@ -128,11 +133,11 @@ const operatorTypeData = {
       codeId: 10001,
       codeValueId: 10028,
       description: null,
-      meaning: "编辑",
-      value: "edit",
+      meaning: '编辑',
+      value: 'edit',
       orderSeq: 20,
       tag: null,
-      enabledFlag: "Y",
+      enabledFlag: 'Y',
       parentCodeValueId: null,
       parentCodeValue: null,
       parentCodeValueMeaning: null,
@@ -142,11 +147,11 @@ const operatorTypeData = {
       codeId: 10001,
       codeValueId: 10028,
       description: null,
-      meaning: "删除",
-      value: "delete",
+      meaning: '删除',
+      value: 'delete',
       orderSeq: 20,
       tag: null,
-      enabledFlag: "Y",
+      enabledFlag: 'Y',
       parentCodeValueId: null,
       parentCodeValue: null,
       parentCodeValueMeaning: null,
@@ -155,18 +160,18 @@ const operatorTypeData = {
 };
 
 const dataSetLovTemple = {
-  "content|10": [
+  'content|10': [
     {
-      _token: "@guid()",
-      "objectVersionNumber|1-10": 1,
+      _token: '@guid()',
+      'objectVersionNumber|1-10': 1,
       code: "@pick(['HR', 'SYS']).@upper(@word)",
-      "codeId|+1": 10001,
-      codeValues: "@ctitle()",
-      description: "@ctitle()",
-      type: "@name",
+      'codeId|+1': 10001,
+      codeValues: '@ctitle()',
+      description: '@ctitle()',
+      type: '@name',
       enabledFlag: /[NY]/,
       parentCodeId: [/1[0-9]{10}/, /1[0-9]{10}/],
-      parentCodeDescription: "@sentence(3, 6)",
+      parentCodeDescription: '@sentence(3, 6)',
     },
   ],
   success: true,
@@ -174,32 +179,32 @@ const dataSetLovTemple = {
 };
 
 const lovDefineTemple = {
-  _token: "@guid()",
+  _token: '@guid()',
   objectVersionNumber: 1,
-  code: "LOV_CODE",
-  description: "快码",
+  code: 'LOV_CODE',
+  description: '快码',
   height: 300,
   lovId: 10015,
   lovItems: [
     {
-      _token: "@guid()",
+      _token: '@guid()',
       objectVersionNumber: 1,
       lovItemId: 10033,
       lovId: 10015,
-      display: "代码",
-      gridFieldName: "code",
+      display: '代码',
+      gridFieldName: 'code',
       gridFieldWidth: 150,
-      gridFieldAlign: "left",
-      autocompleteField: "Y",
-      conditionField: "Y",
-      isAutocomplete: "N",
-      gridField: "Y",
+      gridFieldAlign: 'left',
+      autocompleteField: 'Y',
+      conditionField: 'Y',
+      isAutocomplete: 'N',
+      gridField: 'Y',
       conditionFieldWidth: null,
       conditionFieldLabelWidth: null,
       conditionFieldType: null,
       conditionFieldName: null,
       conditionFieldTextfield: null,
-      conditionFieldNewline: "N",
+      conditionFieldNewline: 'N',
       conditionFieldSelectUrl: null,
       conditionFieldSelectVf: null,
       conditionFieldSelectTf: null,
@@ -209,24 +214,24 @@ const lovDefineTemple = {
       gridFieldSequence: 1,
     },
     {
-      _token: "@guid()",
+      _token: '@guid()',
       objectVersionNumber: 1,
       lovItemId: 10034,
       lovId: 10015,
-      display: "描述",
-      gridFieldName: "description",
+      display: '描述',
+      gridFieldName: 'description',
       gridFieldWidth: 250,
-      gridFieldAlign: "left",
-      autocompleteField: "Y",
-      conditionField: "Y",
-      isAutocomplete: "N",
-      gridField: "Y",
+      gridFieldAlign: 'left',
+      autocompleteField: 'Y',
+      conditionField: 'Y',
+      isAutocomplete: 'N',
+      gridField: 'Y',
       conditionFieldWidth: null,
       conditionFieldLabelWidth: null,
       conditionFieldType: null,
       conditionFieldName: null,
       conditionFieldTextfield: null,
-      conditionFieldNewline: "N",
+      conditionFieldNewline: 'N',
       conditionFieldSelectUrl: null,
       conditionFieldSelectVf: null,
       conditionFieldSelectTf: null,
@@ -236,24 +241,24 @@ const lovDefineTemple = {
       gridFieldSequence: 2,
     },
     {
-      _token: "@guid()",
+      _token: '@guid()',
       objectVersionNumber: 1,
       lovItemId: 10034,
       lovId: 10015,
-      display: "描述2",
-      gridFieldName: "description2",
+      display: '描述2',
+      gridFieldName: 'description2',
       gridFieldWidth: 250,
-      gridFieldAlign: "left",
-      autocompleteField: "Y",
-      conditionField: "Y",
-      isAutocomplete: "N",
-      gridField: "Y",
+      gridFieldAlign: 'left',
+      autocompleteField: 'Y',
+      conditionField: 'Y',
+      isAutocomplete: 'N',
+      gridField: 'Y',
       conditionFieldWidth: null,
       conditionFieldLabelWidth: null,
       conditionFieldType: null,
       conditionFieldName: null,
       conditionFieldTextfield: null,
-      conditionFieldNewline: "N",
+      conditionFieldNewline: 'N',
       conditionFieldSelectUrl: null,
       conditionFieldSelectVf: null,
       conditionFieldSelectTf: null,
@@ -263,21 +268,21 @@ const lovDefineTemple = {
       gridFieldSequence: 2,
     },
   ],
-  placeholder: "请选择快码",
-  sqlId: "CodeMapper.select",
+  placeholder: '请选择快码',
+  sqlId: 'CodeMapper.select',
   customSql: null,
   queryColumns: 2,
   customUrl: null,
-  textField: "description",
-  title: "父级快码",
-  valueField: "code",
+  textField: 'description',
+  title: '父级快码',
+  valueField: 'code',
   width: 710,
-  delayLoad: "N",
-  needQueryParam: "N",
-  editableFlag: "Y",
-  canPopup: "Y",
-  lovPageSize: "10",
-  treeFlag: "N",
+  delayLoad: 'N',
+  needQueryParam: 'N',
+  editableFlag: 'Y',
+  canPopup: 'Y',
+  lovPageSize: '10',
+  treeFlag: 'N',
   idField: null,
   parentIdField: null,
 };
@@ -287,13 +292,13 @@ const lovTempleData = Mock.mock(dataSetLovTemple);
 const lovDefineData = Mock.mock(lovDefineTemple);
 
 export default {
-  "GET /_api/standard-table/query": getFakeList,
-  "DELETE /_api/standard-table/delete": deleteFakeData,
-  "POST /_api/standard-table/submit": submitData,
-  "GET /_api/standard-table/operation-record/query": getOperationRecord,
-  "DELETE /_api/standard-table/operation-record/delete": deleteFakeData,
-  "GET /_api/standard-table/code/status": statusData,
-  "GET /_api/standard-table/code/operatorType": operatorTypeData,
-  "POST /_api/form/dataset/common/lov/dataset/LOV_CODE": lovTempleData,
-  "POST /_api/sys/lov/lov_define": lovDefineData,
+  'GET /_api/standard-table/query': getFakeList,
+  'DELETE /_api/standard-table/delete': deleteFakeData,
+  'POST /_api/standard-table/submit': submitData,
+  'GET /_api/standard-table/operation-record/query': getOperationRecord,
+  'DELETE /_api/standard-table/operation-record/delete': deleteFakeData,
+  'GET /_api/standard-table/code/status': statusData,
+  'GET /_api/standard-table/code/operatorType': operatorTypeData,
+  'POST /_api/form/dataset/common/lov/dataset/LOV_CODE': lovTempleData,
+  'POST /_api/sys/lov/lov_define': lovDefineData,
 };

@@ -1,22 +1,22 @@
-import React, { FC } from "react";
-import { Form, TextField, TextArea, Switch } from "choerodon-ui/pro";
+import React, { FC } from 'react';
+import { Form, TextField, TextArea, DatePicker } from 'choerodon-ui/pro';
 
-import Record from "choerodon-ui/pro/lib/data-set/Record";
+import Record from 'choerodon-ui/pro/lib/data-set/Record';
 
 const EditDetail: FC<{
   record: Record;
   readOnly?: boolean;
   isNew?: boolean;
-}> = (props) => {
+}> = props => {
   const { record, readOnly = false, isNew = false } = props;
   return (
     <div>
       <Form disabled={readOnly} record={record}>
-        {!isNew && <TextField name="serialNumber" disabled />}
-        <TextField name="title" />
-        <TextArea name="description" />
-        <TextField name="remark" />
-        <Switch name="status" />
+        {!isNew && <TextField name="id" disabled />}
+        <TextField name="name" />
+        <TextArea name="desc" />
+        <TextField name="charger" />
+        <DatePicker name="date" />
       </Form>
     </div>
   );
