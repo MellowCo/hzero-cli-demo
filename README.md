@@ -144,8 +144,6 @@ export interface IQueryEmployee {
 }
 ```
 
-
-
 ### 2 修改dataSet，数据源
 
 > 修改 stores/tableDS.ts
@@ -225,7 +223,7 @@ const getTableDSProps = (): DataSetProps => ({
 });
 ```
 
-### 3 修改页面中 Table组件
+### 3 修改页面中组件
 
 > 修改 components/TablePage.tsx
 
@@ -255,5 +253,71 @@ const getTableDSProps = (): DataSetProps => ({
 </Table>
 ```
 
+> 修改 EditDetail.tsx
 
+```tsx
+<Form disabled={readOnly} record={record}>
+    {!isNew && <TextField name="id" disabled />}
+    <TextField name="name" />
+    <TextArea name="desc" />
+    <TextField name="charger" />
+    <DatePicker name="date" />
+</Form>
+```
+
+### 4 修改mock文件
+
+> _mock.ts
+
+[Mock.js (mockjs.com)](http://mockjs.com/)
+
+* 遍历生成
+
+```ts
+import { IEmployee, IQueryEmployee } from './types/Employee';
+
+const getFakeList = (req: Request, res: Response) => {
+  const result: IEmployee[] = [];
+
+  const params = req.query as IQueryEmployee;
+
+  const { size = 10 } = params;
+
+  for (let i = 0; i < size; i++) {
+    result.push({
+      id: Mock.Random.id(),
+      name: Mock.Random.cname(),
+      desc: Mock.Random.csentence(),
+      charger: Mock.Random.cname(),
+      date: Mock.Random.date(),
+    });
+  }
+
+  return res.json({
+    content: result,
+    success: true,
+    totalElements: size * 10,
+  });
+};
+```
+
+* 模板生成
+
+```ts
+const fakeListTemlate = {
+  success: '@boolean',
+  totalElements: '@integer(60, 100)',
+  'content|10': [
+    {
+      id: '111',
+      name: '@cname',
+      desc: '@csentence',
+      charger: '@cname',
+      date: '@date',
+    },
+  ],
+};
+
+const getFakeList = Mock.mock(fakeListTemlate);
+```
 
