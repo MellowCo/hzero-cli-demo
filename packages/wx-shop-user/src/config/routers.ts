@@ -3,10 +3,10 @@ import { RoutersConfig } from 'hzero-boot/lib/typings/IRouterConfig';
 const config: RoutersConfig = [
   // Insert New Router
   {
-    path: '/demo-test/hello',
-    component: () => import('../pages/hello/HelloDemoTestPage'),
+    path: '/wx-shop-user/hello',
+    component: () => import('../pages/hello/HelloWxShopUserPage'),
     authorized: true,
-    title: 'Hello DemoTest',
+    title: 'Hello WxShopUser',
   },
 ];
 

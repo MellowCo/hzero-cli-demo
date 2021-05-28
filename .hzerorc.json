@@ -1,10 +1,7 @@
 {
   "packages": [
     {
-      "name": "demo-test"
-    },
-    {
-      "name": "test"
+      "name": "wx-shop-user"
     }
   ]
 }

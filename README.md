@@ -20,9 +20,7 @@ hzero-cli new sample # 创建 HZERO 前端项目
 
 ![image-20210525195300324](https://gitee.com/MellowCo/BlobImg/raw/master/20210525195300.png)
 
- [每个功能模块对应的api接口文档]([用户相关API (hand-china.com)](https://open.hand-china.com/hzero-docs/v1.3/zh/docs/service/iam/user/))
 
-![image-20210525195347539](https://gitee.com/MellowCo/BlobImg/raw/master/20210525195347.png)
 
 ## 2 启动
 
@@ -68,12 +66,26 @@ API_HOST: http://10.6.1.65:8080
 * 2 将模块打包的子模块中，运行`build:ms`，选择模块
 
 ```shell
-yarn build:ms
+npm run build:ms
 ```
 
 ![image-20210525213603385](https://gitee.com/MellowCo/BlobImg/raw/master/20210525213603.png)
 
 * 3 以上选一种就行
+
+### 4 创建子模块
+
+```shell
+hzero-cli g sm module-name
+# 商城的用户模块
+hzero-cli g sm wx-shop-user
+```
+
+![image-20210528215231585](https://gitee.com/MellowCo/BlobImg/raw/master/20210528215238.png)
+
+
+
+
 
 ### 4 生成页面模板
 

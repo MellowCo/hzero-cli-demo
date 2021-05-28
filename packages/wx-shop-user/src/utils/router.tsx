@@ -20,6 +20,6 @@ const convertRouter = app =>
     options: { app },
   });
 
-export function getRouterData(app) {
+export default function getRouterData(app) {
   return convertRouter(app)();
 }

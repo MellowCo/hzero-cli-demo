@@ -3,10 +3,7 @@ const path = require('path');
 
 module.exports = {
   '@common': path.resolve(paths.appRootPath, 'packages', 'hzero-cli-demo-common/src'),
-  '@/assets': path.resolve(
-    paths.appRootPath,
-    'src/assets'
-  ),
+  '@/assets': path.resolve(paths.appRootPath, 'src/assets'),
   // '@': path.resolve(paths.appPath, 'src'),
   'hzero-front/lib/index': path.resolve(__dirname, 'emptyFile'),
   'hzero-front/lib/utils/getConvertRouter': 'hzero-boot/lib/utils/getConvertRouter',
