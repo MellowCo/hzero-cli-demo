@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { PageHeaderWrapper } from 'hzero-boot/lib/components/Page';
 import { Dispatch } from 'redux';
 import Demo from './Demo';
+
 interface Test1PageProps {
   dispatch: Dispatch<any>;
 }

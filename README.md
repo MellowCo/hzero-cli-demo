@@ -29,8 +29,8 @@ hzero-cli new sample # 创建 HZERO 前端项目
 ### 1 启动项目
 
 ```shell
-yarn start #通过api方式
-yarn start:mock #通过mock方式
+npm run start #通过api方式
+npm run start:mock #通过mock方式
 ```
 
 ### 2 更改api地址
@@ -44,7 +44,7 @@ yarn start:mock #通过mock方式
 ```yml
 API_HOST: http://hzero-backend.open-front.hand-china.com
 # 更改开发的api地址
-API_HOST: 103.1.1.6
+API_HOST: http://10.6.1.65:8080
 ```
 
 ### 3 404问题
