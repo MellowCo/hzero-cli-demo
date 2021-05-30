@@ -15,8 +15,8 @@ const EditDetail: FC<{
         {!isNew && <TextField name="id" disabled />}
         <TextField name="name" />
         <TextArea name="desc" />
-        <TextField name="charger" />
-        <DatePicker name="date" />
+        <TextField name="mobile" />
+        <DatePicker name="birthday" />
       </Form>
     </div>
   );

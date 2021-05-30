@@ -18,6 +18,8 @@ hzero-cli new sample # 创建 HZERO 前端项目
 
 ### 4 选择功能模块
 
+[模块列表](https://open.hand-china.com/document-center/doc/product/10002/10329?doc_id=31531)
+
 ![image-20210525195300324](https://gitee.com/MellowCo/BlobImg/raw/master/20210525195300.png)
 
 
@@ -103,57 +105,44 @@ hzero-cli g sm wx-shop-user
 
 ![image-20210525203602013](https://gitee.com/MellowCo/BlobImg/raw/master/20210525203602.png)
 
-* 填写信息
+* 填写路由信息
 
-![image-20210525204254820](https://gitee.com/MellowCo/BlobImg/raw/master/20210525204254.png)
+![image-20210530205814843](https://gitee.com/MellowCo/BlobImg/raw/master/20210530205821.png)
 
 * 在pages下会生成页面文件
 
-![image-20210525204552222](https://gitee.com/MellowCo/BlobImg/raw/master/20210525204552.png)
+![image-20210530205938331](https://gitee.com/MellowCo/BlobImg/raw/master/20210530205938.png)
 
 * 在`config/routers`下生成路由信息
 
-![image-20210525204718037](https://gitee.com/MellowCo/BlobImg/raw/master/20210525204718.png)
+![image-20210530210011369](https://gitee.com/MellowCo/BlobImg/raw/master/20210530210011.png)
 
 * 效果
 
-  ![image-20210526205241947](https://gitee.com/MellowCo/BlobImg/raw/master/20210526205249.png)
+  ![image-20210530210028530](https://gitee.com/MellowCo/BlobImg/raw/master/20210530210028.png)
 
 ## 3 开发
 
-> 修改生成的模板，创建员工管理页面，有查询表格+新建、编辑、详情等操作
+> 修改生成的模板，创建用户信息页面
 
-### 1 预定员工的基础信息
+### 1 定义用户
 
-```json
-{
-  "id": "number",
-  "name": "string",
-  "desc": "string",
-  "charger": "string",
-  "date": "Date"
-}
-```
-
-> 新建 types/Employee.ts 用于定义类型
+> 新建 types/User.ts 用于定义类型
 
 ```ts
-export interface IEmployee {
+export interface IUser {
   id: string;
   name: string;
   desc: string;
-  charger: string;
-  date: string;
+  mobile: string;
+  birthday: string;
 }
 
-export interface IQueryEmployee {
-  id?: string;
-  name?: string;
-  charger?: string;
-  date?: string;
-  page?: number;
-  size?: number;
+export interface IQueryUser extends IUser {
+  page: number;
+  size: number;
 }
+
 ```
 
 ### 2 修改dataSet，数据源
@@ -167,51 +156,51 @@ const getTableDSProps = (): DataSetProps => ({
   fields: [
     {
       name: 'id',
-      label: '员工编号',
+      label: 'id',
       type: FieldType.number,
     },
     {
       name: 'name',
-      label: '员工姓名',
+      label: '姓名',
       type: FieldType.string,
     },
     {
       name: 'desc',
-      label: '员工描述',
+      label: '描述',
       type: FieldType.string,
     },
     {
-      name: 'charger',
+      name: 'mobile',
       type: FieldType.string,
-      label: '主管姓名',
+      label: '电话',
     },
     {
-      name: 'date',
+      name: 'birthday',
       type: FieldType.date,
-      label: '入职时间',
+      label: '生日',
     },
   ],
   // 查询字段
   queryFields: [
     {
       name: 'id',
-      label: '员工编号',
+      label: '用户id',
       type: FieldType.number,
     },
     {
       name: 'name',
-      label: '员工姓名',
+      label: '姓名',
       type: FieldType.string,
     },
     {
-      name: 'charger',
+      name: 'mobile',
       type: FieldType.string,
-      label: '主管姓名',
+      label: '电话',
     },
     {
-      name: 'date',
+      name: 'birthday',
       type: FieldType.date,
-      label: '入职时间',
+      label: '生日',
     },
   ],
   // 处理请求相关内容 此处用来做mock处理
@@ -256,11 +245,11 @@ const getTableDSProps = (): DataSetProps => ({
     }}
     rowHeight={34}
     >
-    <Column name="id" />
-    <Column name="name" />
-    <Column name="desc" />
-    <Column name="charger" />
-    <Column name="date" />
+		<Column name="id" />
+        <Column name="name" />
+        <Column name="desc" />
+        <Column name="mobile" />
+        <Column name="birthday" />
     <Column header="操作" renderer={operatorsRenderer} width={230} />
 </Table>
 ```
@@ -272,8 +261,8 @@ const getTableDSProps = (): DataSetProps => ({
     {!isNew && <TextField name="id" disabled />}
     <TextField name="name" />
     <TextArea name="desc" />
-    <TextField name="charger" />
-    <DatePicker name="date" />
+    <TextField name="mobile" />
+    <DatePicker name="birthday" />
 </Form>
 ```
 
@@ -286,12 +275,12 @@ const getTableDSProps = (): DataSetProps => ({
 * 遍历生成
 
 ```ts
-import { IEmployee, IQueryEmployee } from './types/Employee';
+import { IQueryUser, IUser } from './types/User';
 
 const getFakeList = (req: Request, res: Response) => {
-  const result: IEmployee[] = [];
+  const result: IUser[] = [];
 
-  const params = req.query as IQueryEmployee;
+  const params = req.query as Partial<IQueryUser>;
 
   const { size = 10 } = params;
 
@@ -300,8 +289,8 @@ const getFakeList = (req: Request, res: Response) => {
       id: Mock.Random.id(),
       name: Mock.Random.cname(),
       desc: Mock.Random.csentence(),
-      charger: Mock.Random.cname(),
-      date: Mock.Random.date(),
+      mobile: Mock.Random.integer(),
+      birthday: Mock.Random.date(),
     });
   }
 
@@ -321,15 +310,17 @@ const fakeListTemlate = {
   totalElements: '@integer(60, 100)',
   'content|10': [
     {
-      id: '111',
+      id: '@id',
       name: '@cname',
       desc: '@csentence',
-      charger: '@cname',
-      date: '@date',
+      mobile: '@integer',
+      birthday: '@date',
     },
   ],
 };
 
 const getFakeList = Mock.mock(fakeListTemlate);
 ```
+
+![image-20210530212738715](https://gitee.com/MellowCo/BlobImg/raw/master/20210530212738.png)
 

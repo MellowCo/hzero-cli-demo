@@ -1,57 +1,57 @@
 import { DataSetProps } from 'choerodon-ui/pro/lib/data-set/DataSet';
 import { FieldType } from 'choerodon-ui/pro/lib/data-set/enum';
 
+// 推荐导出一个函数用于生成ds
+// 这里传入了一个字段用来设置查询 以得到不用的数据 同时进行组件的复用
 const getTableDSProps = (): DataSetProps => ({
   autoQuery: true, // 在创建成功后进行查询
-  // 表格显示的字段
   fields: [
     {
       name: 'id',
-      label: '员工编号',
-      type: FieldType.string,
-    },
-    {
-      name: 'name',
-      label: '员工姓名',
-      type: FieldType.string,
-    },
-    {
-      name: 'desc',
-      label: '员工描述',
-      type: FieldType.string,
-    },
-    {
-      name: 'charger',
-      type: FieldType.string,
-      label: '主管姓名',
-    },
-    {
-      name: 'date',
-      type: FieldType.date,
-      label: '入职时间',
-    },
-  ],
-  // 查询字段
-  queryFields: [
-    {
-      name: 'id',
-      label: '员工编号',
+      label: '用户id',
       type: FieldType.number,
     },
     {
       name: 'name',
-      label: '员工姓名',
+      label: '姓名',
       type: FieldType.string,
     },
     {
-      name: 'charger',
+      name: 'desc',
+      label: '描述',
       type: FieldType.string,
-      label: '主管姓名',
     },
     {
-      name: 'date',
+      name: 'mobile',
+      type: FieldType.string,
+      label: '电话',
+    },
+    {
+      name: 'birthday',
       type: FieldType.date,
-      label: '入职时间',
+      label: '生日',
+    },
+  ],
+  queryFields: [
+    {
+      name: 'id',
+      label: '用户id',
+      type: FieldType.number,
+    },
+    {
+      name: 'name',
+      label: '姓名',
+      type: FieldType.string,
+    },
+    {
+      name: 'mobile',
+      type: FieldType.string,
+      label: '电话',
+    },
+    {
+      name: 'birthday',
+      type: FieldType.date,
+      label: '生日',
     },
   ],
   // 处理请求相关内容 此处用来做mock处理

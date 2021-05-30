@@ -1,11 +1,11 @@
 import Mock from 'mockjs';
 import { Request, Response } from 'express';
-// import { IEmployee, IQueryEmployee } from './types/Employee';
+// import { IQueryUser, IUser } from './types/User';
 
 // const getFakeList = (req: Request, res: Response) => {
-//   const result: IEmployee[] = [];
+//   const result: IUser[] = [];
 
-//   const params = req.query as IQueryEmployee;
+//   const params = req.query as Partial<IQueryUser>;
 
 //   const { size = 10 } = params;
 
@@ -14,8 +14,8 @@ import { Request, Response } from 'express';
 //       id: Mock.Random.id(),
 //       name: Mock.Random.cname(),
 //       desc: Mock.Random.csentence(),
-//       charger: Mock.Random.cname(),
-//       date: Mock.Random.date(),
+//       mobile: Mock.Random.integer(),
+//       birthday: Mock.Random.date(),
 //     });
 //   }
 
@@ -34,8 +34,8 @@ const fakeListTemlate = {
       id: '@id',
       name: '@cname',
       desc: '@csentence',
-      charger: '@cname',
-      date: '@date',
+      mobile: '@integer',
+      birthday: '@date',
     },
   ],
 };

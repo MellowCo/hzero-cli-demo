@@ -22,7 +22,7 @@ const StandardTable: FC = props => {
           </Button>
         </div>
       }
-      title="标准基础表格：基础的增删改查表格"
+      title="用户信息"
     >
       <div>
         <TablePage {...props} />

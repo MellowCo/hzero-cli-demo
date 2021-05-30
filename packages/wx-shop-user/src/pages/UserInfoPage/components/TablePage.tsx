@@ -10,11 +10,18 @@ import { operatorRender } from 'hzero-front/lib/utils/renderer';
 import { ButtonColor } from 'choerodon-ui/pro/lib/button/enum';
 import style from '../index.less';
 import Store from '../stores';
-import { handleDealWithRecord, handleLineDelete } from '../utils';
+import {
+  handleDealWithRecord,
+  handleLineDelete,
+  handleChangeStatus,
+  handleShowOperationRecord,
+} from '../utils';
 
 const { Column } = Table;
 
-const TablePage: FC = () => {
+const TablePage: FC = prosp => {
+  const { history } = prosp as any; // 作为需要使用路由的时候使用
+  console.log(history);
   const { tableDs } = useContext(Store);
 
   /**
@@ -53,6 +60,21 @@ const TablePage: FC = () => {
         title: '删除',
       },
       {
+        key: 'status',
+        ele: (
+          <ButtonPermission
+            type="text"
+            onClick={() => {
+              handleChangeStatus(record!, dataSet!);
+            }}
+          >
+            {record?.get('status') ? '禁用' : '启用'}
+          </ButtonPermission>
+        ),
+        len: 2,
+        title: record?.get('status') ? '禁用' : '启用',
+      },
+      {
         key: 'detail',
         ele: (
           <ButtonPermission
@@ -69,6 +91,21 @@ const TablePage: FC = () => {
         ),
         len: 2,
         title: '详情',
+      },
+      {
+        key: 'operationRecord',
+        ele: (
+          <ButtonPermission
+            type="text"
+            onClick={() => {
+              handleShowOperationRecord(record!);
+            }}
+          >
+            操作记录
+          </ButtonPermission>
+        ),
+        len: 2,
+        title: '操作记录',
       },
     ];
     return operatorRender(operators, record, {
@@ -98,8 +135,8 @@ const TablePage: FC = () => {
         <Column name="id" />
         <Column name="name" />
         <Column name="desc" />
-        <Column name="charger" />
-        <Column name="date" />
+        <Column name="mobile" />
+        <Column name="birthday" />
         <Column header="操作" renderer={operatorsRenderer} width={230} />
       </Table>
     </div>

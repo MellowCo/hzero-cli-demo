@@ -1,16 +1,19 @@
-module.exports =  {
-  "packages": [
+module.exports = {
+  packages: [
     {
-      "name": "hzero-front-hiam"
+      name: 'hzero-front-hiam',
     },
     {
-      "name": "hzero-front-hpfm"
+      name: 'hzero-front-hpfm',
     },
     {
-      "name": "hzero-cli-demo-demo1"
-    }
+      name: 'hzero-cli-demo-demo1',
+    },
+    {
+      name: 'wx-shop-user',
+    },
   ],
-  "hzeroBoot": "hzero-boot/lib/pathInfo",
+  hzeroBoot: 'hzero-boot/lib/pathInfo',
   // webpackConfig: (config, webpackConfigType) => { // webpack 配置修改
   //   console.log(webpackConfigType); // string webpack配置类型: 'dll' | 'base' | 'ms' ;
   //   config.externals = {
@@ -36,6 +39,5 @@ module.exports =  {
   //   }
   // },
   // splitChunks:{ /* ... */}, // chunks 优化配置 参考: https://webpack.js.org/plugins/split-chunks-plugin/#optimizationsplitchunks
-  'common': ['hzero-cli-demo-common'],
+  common: ['hzero-cli-demo-common'],
 };
-

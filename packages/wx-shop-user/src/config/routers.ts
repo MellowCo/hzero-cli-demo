@@ -1,7 +1,13 @@
 import { RoutersConfig } from 'hzero-boot/lib/typings/IRouterConfig';
 
 const config: RoutersConfig = [
-  // Insert New Router
+  {
+    path: '/user-info',
+    component: () => import('../pages/UserInfoPage'),
+    models: [],
+    title: '用户信息',
+    authorized: true,
+  },
   {
     path: '/wx-shop-user/hello',
     component: () => import('../pages/hello/HelloWxShopUserPage'),
@@ -9,5 +15,4 @@ const config: RoutersConfig = [
     title: 'Hello WxShopUser',
   },
 ];
-
 export default config;
