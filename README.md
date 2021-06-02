@@ -6,6 +6,8 @@
 npm install -g hzero-cli --registry http://nexus.saas.hand-china.com/content/groups/hzero-npm-group # 安装 HZERO-CLI 工具
 ```
 
+[hzero-cli 命令](https://open.hand-china.com/document-center/doc/component/401/13770?doc_id=31284#创建项目 new)
+
 ### 2 创建项目
 
 ```shell
@@ -22,7 +24,11 @@ hzero-cli new sample # 创建 HZERO 前端项目
 
 ![image-20210525195300324](https://gitee.com/MellowCo/BlobImg/raw/master/20210525195300.png)
 
+> 后续添加模块
 
+```shell
+hzero-cli add hzero-front-xxx
+```
 
 ## 2 启动
 
@@ -323,4 +329,151 @@ const getFakeList = Mock.mock(fakeListTemlate);
 ```
 
 ![image-20210530212738715](https://gitee.com/MellowCo/BlobImg/raw/master/20210530212738.png)
+
+### 5 打包发布
+
+```shel
+npm run build
+```
+
+## 4 微前端
+
+### 1 相关命令
+
+```shell
+# 只打包主模块
+hzero-cli build --only-build-parent
+
+# 打包主模块和选择一些子模块
+npm run build:ms
+
+# 将子模块打包微前端子模块
+npm run build:ext-ms
+```
+
+### 2 在主模块中 配置子模块的ip地址
+
+> 在`src/config/.env.yml`中，修改`PACKAGE_PUBLIC_URL`变量，可以配置多个
+
+![image-20210602214450546](https://gitee.com/MellowCo/BlobImg/raw/master/20210602214450.png)
+
+### 3 打包主模块（包含子模块，基础服务）
+
+```shell
+# 将hiam和hpfm打包到主模块中
+npm run build:ms
+```
+
+![image-20210602214038578](https://gitee.com/MellowCo/BlobImg/raw/master/20210602214045.png)
+
+![image-20210602214831335](https://gitee.com/MellowCo/BlobImg/raw/master/20210602214831.png)
+
+### 4 将用户信息打包微前端子模块
+
+```shell
+npm run build:ext-ms
+```
+
+![image-20210602214937189](https://gitee.com/MellowCo/BlobImg/raw/master/20210602214937.png)
+
+![image-20210602215020981](https://gitee.com/MellowCo/BlobImg/raw/master/20210602215021.png)
+
+### 5 启动服务
+
+> 通过`serve`快速开启服务器
+
+```shell
+# 全局安装serve
+npm i -g serve
+```
+
+#### 1 在本地5000端口开启主模块
+
+> 在`dist`目录下，运行
+
+```
+serve .
+```
+
+![image-20210602215359737](https://gitee.com/MellowCo/BlobImg/raw/master/20210602215359.png)
+
+#### 2 在5001端口开启 用户信息微前端子模块
+
+> 在`dist-ext`目录下，运行
+
+```shell
+serve . -p 5001
+```
+
+#### 3 在5000父模块 直接访问5001的子模块
+
+> 访问http://localhost:5000/，在菜单中点击用户信息，即可访问
+
+![image-20210602221616883](https://gitee.com/MellowCo/BlobImg/raw/master/20210602221616.png)
+
+### 6 打包主模块 （不包含子模块）
+
+> 在`package.json`添加命令
+
+![image-20210602222040292](https://gitee.com/MellowCo/BlobImg/raw/master/20210602222040.png)
+
+```shell
+hzero-cli build --only-build-parent
+# 运行新增的命令
+npm run build:only-parent
+```
+
+### 7 将基础服务打包到微前端子模块，部署到5001
+
+> 修改`BUILD_DIST_PATH`,指定打包文件夹
+
+![image-20210602222457800](https://gitee.com/MellowCo/BlobImg/raw/master/20210602222457.png)
+
+```shell
+npm run build:ext-ms
+```
+
+![image-20210602222428327](https://gitee.com/MellowCo/BlobImg/raw/master/20210602222428.png)
+
+![image-20210602222605181](https://gitee.com/MellowCo/BlobImg/raw/master/20210602222605.png)
+
+### 8 将用户信息打包，部署到5002
+
+![image-20210602222709564](https://gitee.com/MellowCo/BlobImg/raw/master/20210602222709.png)
+
+![image-20210602222721493](https://gitee.com/MellowCo/BlobImg/raw/master/20210602222721.png)
+
+![image-20210602222744237](https://gitee.com/MellowCo/BlobImg/raw/master/20210602222744.png)
+
+### 9 启动服务
+
+#### 1 在本地5000端口开启主模块
+
+> 在`dist`目录下，运行
+
+```
+serve .
+```
+
+![image-20210602215359737](https://gitee.com/MellowCo/BlobImg/raw/master/20210602215359.png)
+
+#### 2 在本地5001端口开启基本服务
+
+> 在`base`目录下，运行
+
+```
+serve . -p 5001
+```
+
+#### 3 在本地5002端口开启用户信息
+
+> 在`user-info`目录下，运行
+
+```
+serve . -p 5002
+```
+
+#### 4 打开 http://localhost:5000
+
+> 可以访问到基础服务和用户信息
 
