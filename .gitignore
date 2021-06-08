@@ -49,3 +49,5 @@ locale/code-scan
 locale/bak-code-scan-*
 
 .history
+base/
+user-info/

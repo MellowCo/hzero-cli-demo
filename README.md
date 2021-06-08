@@ -351,11 +351,15 @@ npm run build:ms
 npm run build:ext-ms
 ```
 
-### 2 在主模块中 配置子模块的ip地址
+### 2 在主模块中 配置子模块的部署ip地址
 
 > 在`src/config/.env.yml`中，修改`PACKAGE_PUBLIC_URL`变量，可以配置多个
 
-![image-20210602214450546](https://gitee.com/MellowCo/BlobImg/raw/master/20210602214450.png)
+```yaml
+PACKAGE_PUBLIC_URL: http://localhost:5001,http://localhost:5002
+```
+
+![image-20210603162858251](C:/Users/li/AppData/Roaming/Typora/typora-user-images/image-20210603162858251.png)
 
 ### 3 打包主模块（包含子模块，基础服务）
 
@@ -418,7 +422,7 @@ serve . -p 5001
 ![image-20210602222040292](https://gitee.com/MellowCo/BlobImg/raw/master/20210602222040.png)
 
 ```shell
-hzero-cli build --only-build-parent
+"build:only-parent": "hzero-cli build --only-build-parent",
 # 运行新增的命令
 npm run build:only-parent
 ```
