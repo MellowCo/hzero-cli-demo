@@ -90,7 +90,7 @@
     "build:production": "cross-env NODE_OPTIONS='--max_old_space_size=8196' NODE_PROFILE=production hzero-cli build --only-build-micro --all-packages",
     "build:all-ms": "hzero-cli build --only-build-micro --all-packages",
     "build:ms": "cross-env NODE_OPTIONS='--max_old_space_size=8196' hzero-cli build --only-build-micro",
-    "build:ext-ms": "cross-env BUILD_PUBLIC_MS=true BUILD_DIST_PATH=./user-info BUILD_SKIP_PARENT=true hzero-cli build --only-build-micro",
+    "build:ext-ms": "cross-env BUILD_PUBLIC_MS=true BUILD_DIST_PATH=./dist-ext/base BUILD_SKIP_PARENT=true hzero-cli build --only-build-micro",
     "build:analyze": "cross-env ANALYZE=true hzero-cli build",
     "build:dll": "hzero-cli build --build-dll",
     "build:dll-dev": "hzero-cli build --build-dll --build-dll-dev",

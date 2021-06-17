@@ -11,11 +11,7 @@ import {
   useDataSetIsSelected,
   useDataSetEvent,
 } from 'hzero-front/lib/utils/hooks';
-import {
-  DataSetSelection,
-  FieldType,
-  FieldIgnore,
-} from 'choerodon-ui/pro/lib/data-set/enum';
+import { DataSetSelection, FieldType, FieldIgnore } from 'choerodon-ui/pro/lib/data-set/enum';
 import { AxiosRequestConfig } from 'axios';
 
 const TODO_API = '/htodo';
@@ -27,17 +23,13 @@ const todoDataSetFactory = () =>
       read: (config: AxiosRequestConfig): AxiosRequestConfig => {
         return {
           ...config,
-          url: `${
-            TODO_API
-          }/v1/${getCurrentOrganizationId()}/tasks`,
+          url: `${TODO_API}/v1/${getCurrentOrganizationId()}/tasks`,
           method: 'GET',
         };
       },
       submit: ({ data, params }): AxiosRequestConfig => {
         return {
-          url: `${
-            TODO_API
-          }/v1/${getCurrentOrganizationId()}/tasks/submit`,
+          url: `${TODO_API}/v1/${getCurrentOrganizationId()}/tasks/submit`,
           data,
           params,
           method: 'POST',
@@ -184,19 +176,14 @@ const HelloWorldPage: React.FC = () => {
 
   return (
     <PageHeaderWrapper
-    title="Hello World"
-    header={
-      <Button color={ButtonColor.primary} onClick={() => tableDS.submit()}>
-        提交
-      </Button>
-    }
+      title="Hello World"
+      header={
+        <Button color={ButtonColor.primary} onClick={() => tableDS.submit()}>
+          提交
+        </Button>
+      }
     >
-      <Table
-        queryFieldsLimit={3}
-        dataSet={tableDS}
-        columns={columns}
-        buttons={buttons}
-      />
+      <Table queryFieldsLimit={3} dataSet={tableDS} columns={columns} buttons={buttons} />
       <pre>当前在第 {currentPage} 页</pre>
       <p>{isSelected ? '当前勾选了数据' : '当前没有勾选数据'}</p>
     </PageHeaderWrapper>

@@ -35,8 +35,7 @@ hzero-cli add hzero-front-xxx
 ### 1 启动项目
 
 ```shell
-npm run start #通过api方式
-npm run start:mock #通过mock方式
+npm run start
 ```
 
 ### 2 更改api地址
@@ -96,6 +95,12 @@ hzero-cli g sm wx-shop-user
 
 
 ### 4 生成页面模板
+
+* 在菜单配置中，设置菜单
+
+  ![image-20210617151156299](C:/Users/li/AppData/Roaming/Typora/typora-user-images/image-20210617151156299.png)
+
+
 
 > 基于 [UmiJS - 插件化的企业级前端应用框架](https://umijs.org/zh-CN)
 
@@ -276,6 +281,8 @@ const getTableDSProps = (): DataSetProps => ({
 
 > _mock.ts
 
+[Mock 数据 (umijs.org)](https://umijs.org/zh-CN/docs/mock)
+
 [Mock.js (mockjs.com)](http://mockjs.com/)
 
 * 遍历生成
@@ -336,6 +343,8 @@ const getFakeList = Mock.mock(fakeListTemlate);
 npm run build
 ```
 
+
+
 ## 4 微前端
 
 ### 1 相关命令
@@ -359,7 +368,7 @@ npm run build:ext-ms
 PACKAGE_PUBLIC_URL: http://localhost:5001,http://localhost:5002
 ```
 
-![image-20210603162858251](C:/Users/li/AppData/Roaming/Typora/typora-user-images/image-20210603162858251.png)
+![image-20210617160416121](https://gitee.com/MellowCo/BlobImg/raw/master/20210617160416.png)
 
 ### 3 打包主模块（包含子模块，基础服务）
 
@@ -417,6 +426,21 @@ serve . -p 5001
 
 ### 6 打包主模块 （不包含子模块）
 
+> 注释子模块路由，src/utils/getModuleRouters.js
+
+```js
+import { getModuleRouters } from 'utils/utils';
+// import * as hzeroFrontHpfmRouters from 'hzero-front-hpfm/lib/utils/router';
+// import * as hzeroFrontHiamRouters from 'hzero-front-hiam/lib/utils/router';
+
+export default app =>
+  getModuleRouters(app, [
+    // hzeroFrontHpfmRouters, hzeroFrontHiamRouters
+ ]);
+```
+
+
+
 > 在`package.json`添加命令
 
 ![image-20210602222040292](https://gitee.com/MellowCo/BlobImg/raw/master/20210602222040.png)
@@ -431,23 +455,25 @@ npm run build:only-parent
 
 > 修改`BUILD_DIST_PATH`,指定打包文件夹
 
-![image-20210602222457800](https://gitee.com/MellowCo/BlobImg/raw/master/20210602222457.png)
+![image-20210617143715308](https://gitee.com/MellowCo/BlobImg/raw/master/20210617143722.png)
 
 ```shell
 npm run build:ext-ms
 ```
 
-![image-20210602222428327](https://gitee.com/MellowCo/BlobImg/raw/master/20210602222428.png)
+![image-20210617143804987](https://gitee.com/MellowCo/BlobImg/raw/master/20210617143805.png)
 
-![image-20210602222605181](https://gitee.com/MellowCo/BlobImg/raw/master/20210602222605.png)
+
 
 ### 8 将用户信息打包，部署到5002
 
-![image-20210602222709564](https://gitee.com/MellowCo/BlobImg/raw/master/20210602222709.png)
+![image-20210617143900354](https://gitee.com/MellowCo/BlobImg/raw/master/20210617143900.png)
 
-![image-20210602222721493](https://gitee.com/MellowCo/BlobImg/raw/master/20210602222721.png)
+![image-20210617144014112](https://gitee.com/MellowCo/BlobImg/raw/master/20210617144014.png)
 
-![image-20210602222744237](https://gitee.com/MellowCo/BlobImg/raw/master/20210602222744.png)
+
+
+![image-20210617144114394](https://gitee.com/MellowCo/BlobImg/raw/master/20210617144114.png)
 
 ### 9 启动服务
 
